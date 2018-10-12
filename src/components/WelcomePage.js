@@ -13,7 +13,7 @@ import SignupForm from './SignupForm';
 const styles = theme => ({
   paper: {
     marginTop: 64 + theme.spacing.unit * 3,
-    width: 800,
+    width: 400,
   },
   tabContent: {
     padding: theme.spacing.unit * 3,

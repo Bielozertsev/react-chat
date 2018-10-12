@@ -20,24 +20,16 @@ class LoginForm extends React.Component {
       isValid: true,
     },
   }
-
-  handleUsernameInputChange = (event) => {
+  
+  handleInputChange = (event) => {
     event.persist();
-    this.setState((prevState) => ({
-      username: {
-        ...prevState.username,
-        value: event.target.value,
-      },
-    }));
-  }
+    const { name, value } = event.target;
 
-  handlePasswordInputChange = (event) => {
-    event.persist();
     this.setState((prevState) => ({
-      password: {
-        ...prevState.password,
-        value: event.target.value,
-      },
+      [name]: {
+        ...prevState[name],
+        value
+      }
     }));
   }
 
@@ -63,22 +55,24 @@ class LoginForm extends React.Component {
           label="Username"
           placeholder="Type your username..."
           type="text"
+          name="username"
           margin="normal"
           autoComplete="username"
           value={username.value}
-          onChange={this.handleUsernameInputChange}
+          onChange={this.handleInputChange}
           error={!username.isValid}
         />
         <TextField
           required
           fullWidth
           label="Password"
-          placeholder="Type your username..."
+          placeholder="Type your password..."
           type="password"
+          name="password"
           margin="normal"
           autoComplete="current-password"
           value={password.value}
-          onChange={this.handlePasswordInputChange}
+          onChange={this.handleInputChange}
           error={!password.isValid}
         />
         <Button
