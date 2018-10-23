@@ -2,8 +2,9 @@ import fetch from 'isomorphic-fetch';
 
 export default function callApi(endpoint, token, options, payload) {
   const authHeaders = token ? {
-    'Authorization': `Baerer ${token}`,
+    'Authorization': `Bearer ${token}`,
   } : {};
+
   return fetch(`http://localhost:8000/v1/${endpoint}`, {
     method: 'GET',
     headers: {
@@ -14,11 +15,12 @@ export default function callApi(endpoint, token, options, payload) {
     body: JSON.stringify(payload),
     ...options
   })
-  .then(response => response.json())
-  .then(json => {
-    if (json.success){
-      return json;
-    }
-    throw new Error(json.message);
-  })
+    .then(response => response.json())
+    .then(json => {
+      if (json.success) {
+        return json;
+      }
+
+      throw new Error(json.message);
+    });
 }

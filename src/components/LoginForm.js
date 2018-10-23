@@ -20,7 +20,7 @@ class LoginForm extends React.Component {
       isValid: true,
     },
   }
-  
+
   handleInputChange = (event) => {
     event.persist();
     const { name, value } = event.target;
@@ -28,8 +28,8 @@ class LoginForm extends React.Component {
     this.setState((prevState) => ({
       [name]: {
         ...prevState[name],
-        value
-      }
+        value,
+      },
     }));
   }
 
@@ -64,7 +64,7 @@ class LoginForm extends React.Component {
           required
           fullWidth
           label="Password"
-          placeholder="Type your password..."
+          placeholder="Type your username..."
           type="password"
           name="password"
           margin="normal"

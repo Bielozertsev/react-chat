@@ -44,8 +44,8 @@ class SignupForm extends React.Component {
     this.setState((prevState) => ({
       [name]: {
         ...prevState[name],
-        value
-      }
+        value,
+      },
     }));
   }
 
@@ -57,8 +57,6 @@ class SignupForm extends React.Component {
     } 
 
     const { username, password } = this.state;
-
-    console.log('Sign up:', username.value, password.value);
 
     this.props.onSubmit(username.value, password.value);
   }
@@ -75,8 +73,8 @@ class SignupForm extends React.Component {
           label="Username"
           placeholder="Type your username..."
           type="text"
-          name="username"
           margin="normal"
+          name="username"
           autoComplete="username"
           value={username.value}
           onChange={this.handleInputChange}
@@ -88,8 +86,8 @@ class SignupForm extends React.Component {
           label="Password"
           placeholder="Type your password..."
           type="password"
-          name="password"
           margin="normal"
+          name="password"
           autoComplete="new-password"
           value={password.value}
           onChange={this.handleInputChange}
@@ -101,8 +99,8 @@ class SignupForm extends React.Component {
           label="Repeat password"
           placeholder="Repeat your password..."
           type="password"
-          name="repeatedPassword"
           margin="normal"
+          name="repeatedPassword"
           autoComplete="new-password"
           value={repeatedPassword.value}
           onChange={this.handleInputChange}
@@ -114,7 +112,6 @@ class SignupForm extends React.Component {
           type="submit"
           color="primary"
           className={classes.signUpButton}
-          onClick={this.handleSubmit}
         >
           Signup
         </Button>

@@ -7,16 +7,17 @@ export function signup(username, password) {
       type: types.SIGNUP_REQUEST,
     });
 
-    return callApi('/signup', undefined, { method: 'POST'}, {
-        username,
-        password,
-      })
-      .then(json => {  
+    return callApi('/signup', undefined, { method: 'POST' }, {
+      username,
+      password,
+    })
+      .then(json => {
         if (!json.token) {
-          throw new Error('Token has been provided!');
+          throw new Error('Token has not been provided!');
         }
-        // Save JWT to localstorage
-        localStorage.setItem('token', json.token)
+
+        // Save JWT to localStorage
+        localStorage.setItem('token', json.token);
 
         dispatch({
           type: types.SIGNUP_SUCCESS,
@@ -26,7 +27,7 @@ export function signup(username, password) {
       .catch(reason => dispatch({
         type: types.SIGNUP_FAILURE,
         payload: reason,
-      }))  
+      }));
   };
 }
 
@@ -61,10 +62,26 @@ export function login(username, password) {
 }
 
 export function logout() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
-      type: types.LOGOUT_REQUEST,
+      type: types.LOGOUT_REQUEST
     });
+
+    return callApi('/logout')
+      .then(json => {
+        // Remove JWT from localStorage
+        localStorage.removeItem('token');
+
+        // redirect to welcome in case of failure
+        dispatch({
+          type: types.LOGOUT_SUCCESS,
+          payload: json
+        })
+      })
+      .catch(reason => dispatch({
+        type: types.LOGOUT_FAILURE,
+        payload: reason,
+      }));
   };
 }
 

@@ -13,4 +13,3 @@ export const LOGOUT_FAILURE = Symbol('auth/LOGOUT_FAILURE');
 export const RECIEVE_AUTH_REQUEST = Symbol('auth/RECIEVE_AUTH_REQUEST');
 export const RECIEVE_AUTH_SUCCESS = Symbol('auth/RECIEVE_AUTH_SUCCESS');
 export const RECIEVE_AUTH_FAILURE = Symbol('auth/RECIEVE_AUTH_FAILURE');
-
