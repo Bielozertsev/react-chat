@@ -14,7 +14,7 @@ import SignupForm from './SignupForm';
 const styles = theme => ({
   paper: {
     marginTop: 64 + theme.spacing.unit * 3,
-    width: 400,
+    width: 500,
   },
   tabContent: {
     padding: theme.spacing.unit * 3,
@@ -26,6 +26,10 @@ class WelcomePage extends React.Component {
     activeTab: 0,
   }
 
+  componentDidMount() {
+    this.props.recieveAuth();
+  }
+
   handleTabChage = (event, value) => {
     this.setState({ activeTab: value });
   }
@@ -34,11 +38,12 @@ class WelcomePage extends React.Component {
     const { classes, signup, login, isAuthenticated } = this.props;
     const { activeTab } = this.state;
 
-    if (isAuthenticated){
+    if (isAuthenticated) {
       return (
         <Redirect to="/chat" />
       );
     }
+
     return (
       <React.Fragment>
         <AppBar>
@@ -62,8 +67,8 @@ class WelcomePage extends React.Component {
                 </Tabs>
               </AppBar>
               <div className={classes.tabContent}>
-                {activeTab === 0 && <LoginForm onSubmit={login}/>}
-                {activeTab === 1 && <SignupForm onSubmit={signup}/>}
+                {activeTab === 0 && <LoginForm onSubmit={login} />}
+                {activeTab === 1 && <SignupForm onSubmit={signup} />}
               </div>
             </Paper>
           </Grid>
