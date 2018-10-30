@@ -1,10 +1,12 @@
 import SocketIOClient from 'socket.io-client';
 import * as types from '../constants';
 import { redirect } from './services';
+import { ERROR } from 'socket.io-parser';
 
 export function missingSocketConnection() {
   return {
     type: types.SOCKETS_CONNECTION_MISSING,
+    payload: new Error('Missing connection'),
   }
 }
 
@@ -33,14 +35,16 @@ export function socketsConnect() {
         type: types.SOCKETS_СONNECTION_SUCCESS,
       });
     });
-    socket.on('error', () => {
+    socket.on('error', (error) => {
       dispatch({
         type: types.SOCKETS_СONNECTION_FAILURE,
+        payload: new Error(`Connection: ${error}`),
       });
     });
     socket.on('connect_error', () => {
       dispatch({
         type: types.SOCKETS_СONNECTION_FAILURE,
+        payload: new Error('We have lost connection :('),
       });
     }); 
     
