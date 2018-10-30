@@ -17,7 +17,11 @@ const initialState = {
     deleteChat: false,
     sockets: false,
     editUser: false,
-  }
+  },
+  errors: {
+    auth: null,
+    chat: null,
+  },
 }
 
 export const isFetching = (state = initialState.isFetching, action) => {
@@ -93,6 +97,48 @@ export const isFetching = (state = initialState.isFetching, action) => {
   }
 }
 
+export const errors  = (state = initialState, action) => {
+  switch (action.type) {
+    case types.SIGNUP_FAILURE:
+    case types.LOGIN_FAILURE:
+    case types.LOGOUT_FAILURE:
+      //used for internal needs
+      //case types.RECIEVE_AUTH_FAILIURE:        
+      return { ...state, auth: action.payload };
+
+    case types.SIGNUP_SUCCESS:
+    case types.LOGIN_SUCCESS:
+    case types.LOGOUT_SUCCESS: 
+      //used for internal needs
+      //case types.RECIEVE_AUTH_SUCCESS:      
+      return { ...state, auth: null};
+    case types.FETCH_ALL_CHATS_FAILURE: 
+    case types.FETCH_MY_CHATS_FAILURE:  
+    case types.FETCH_CHAT_FAILURE:  
+    case types.CREATE_CHAT_FAILURE:      
+    case types.JOIN_CHAT_FAILURE:      
+    case types.LEAVE_CHAT_FAILURE:  
+    case types.DELETE_CHAT_FAILURE:    
+    case types.SOCKETS_СONNECTION_FAILURE:    
+    case types.EDIT_USER_FAILURE:    
+      return { ...state, chat: action.payload };      
+    case types.FETCH_ALL_CHATS_SUCCESS: 
+    case types.FETCH_MY_CHATS_SUCCESS:  
+    case types.FETCH_CHAT_SUCCESS:  
+    case types.CREATE_CHAT_SUCCESS:      
+    case types.JOIN_CHAT_SUCCESS:      
+    case types.LEAVE_CHAT_SUCCESS:  
+    case types.DELETE_CHAT_SUCCESS:    
+    case types.SOCKETS_СONNECTION_SUCCESS:    
+    case types.EDIT_USER_SUCCESS:    
+      return { ...state, chat: null };       
+    default:
+      return state;  
+  }
+}
+
 export default combineReducers({
-  isFetching
+  isFetching,
+  errors,
 });
+ 
