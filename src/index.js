@@ -12,20 +12,20 @@ const rootEl = document.getElementById('root');
 const store = configureStore();
 
 const render = (Component) => {
-  ReactDOM.render( 
+  ReactDOM.render(
     <Provider store={store}>
       <Component />
     </Provider>,
-    rootEl
+    rootEl,
   );
-}
+};
 
 render(App);
-  
-if(module.hot) {
+
+if (module.hot) {
   module.hot.accept('./components/App', () => {
     render(App);
-  })
+  });
 }
 
 registerServiceWorker();

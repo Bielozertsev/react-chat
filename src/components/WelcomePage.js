@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography'
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -14,13 +14,13 @@ import ErrorMessage from './ErrorMessage';
 
 const styles = theme => ({
   paper: {
-    marginTop: 64 + theme.spacing.unit * 3,
+    marginTop: (theme.spacing.unit * 3) + 64,
     width: 500,
   },
   tabContent: {
     padding: theme.spacing.unit * 3,
-  }
-})
+  },
+});
 
 class WelcomePage extends React.Component {
   state = {
@@ -36,7 +36,9 @@ class WelcomePage extends React.Component {
   }
 
   render() {
-    const { classes, signup, login, isAuthenticated, error } = this.props;
+    const {
+      classes, signup, login, isAuthenticated, error,
+    } = this.props;
     const { activeTab } = this.state;
 
     if (isAuthenticated) {
