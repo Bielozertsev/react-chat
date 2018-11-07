@@ -1,16 +1,12 @@
 const { createStore } = require('redux');
 
 const increment = {
-  type: 'INCREMENT'
-};
-
-const decrement = {
-  type: 'DECREMENT'
+  type: 'INCREMENT',
 };
 
 const initialState = 0;
 
-function reducer(state = initialState, action){
+function reducer(state = initialState, action) {
   switch (action.type) {
     case 'INCREMENT':
       return state + 1;
@@ -21,12 +17,11 @@ function reducer(state = initialState, action){
   }
 }
 
-
-const store = createStore(reducer); 
+const store = createStore(reducer);
 
 store.subscribe(() => {
-  console.log(store.getState())
-})
+  console.log(store.getState());
+});
 
 store.dispatch(increment);
 store.dispatch(increment);

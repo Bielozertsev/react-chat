@@ -25,9 +25,7 @@ export const isCreator = (state, chat) => {
 
 export const isMember = (state, chat) => {
   try {
-    return chat.members.some(
-      member => getUserId(member) === getUserId(getActiveUser(state)),
-    );
+    return chat.members.some(member => getUserId(member) === getUserId(getActiveUser(state)));
   } catch (e) {
     return false;
   }

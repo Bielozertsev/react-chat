@@ -67,20 +67,16 @@ to see your recent conversations.
     return messages && messages.length ? (
       <div
         className={classes.messagesWrapper}
-        ref={(wrapper) => { this.messagesWrapper = wrapper; }}
+        ref={(wrapper) => {
+          this.messagesWrapper = wrapper;
+        }}
       >
         {messages.map(message => (
-          <ChatMessage
-            key={message._id}
-            activeUser={activeUser}
-            {...message}
-          />
+          <ChatMessage key={message._id} activeUser={activeUser} {...message} />
         ))}
       </div>
     ) : (
-      <Typography variant="display1">
-        There is no messages yet...
-      </Typography>
+      <Typography variant="display1">There is no messages yet...</Typography>
     );
   }
 }

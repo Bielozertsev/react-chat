@@ -34,12 +34,12 @@ class NewChatButton extends React.Component {
       value: '',
       isValid: true,
     },
-  }
+  };
 
   toggleModal = () => {
     // eslint-disable-next-line
     this.setState({ open: !this.state.open });
-  }
+  };
 
   handleTitleChange = (event) => {
     this.setState({
@@ -48,7 +48,7 @@ class NewChatButton extends React.Component {
         isValid: true,
       },
     });
-  }
+  };
 
   handleCreateClick = (event) => {
     event.preventDefault();
@@ -74,7 +74,7 @@ class NewChatButton extends React.Component {
         isValid: true,
       },
     });
-  }
+  };
 
   render() {
     const { classes, disabled } = this.props;
@@ -91,11 +91,7 @@ class NewChatButton extends React.Component {
         >
           <AddIcon />
         </Button>
-        <Modal
-          open={open}
-          className={classes.modalWrapper}
-          onClose={this.toggleModal}
-        >
+        <Modal open={open} className={classes.modalWrapper} onClose={this.toggleModal}>
           <Paper className={classes.modal}>
             <Typography variant="title" id="modal-title">
               Create new chat
@@ -112,10 +108,7 @@ class NewChatButton extends React.Component {
               onChange={this.handleTitleChange}
               error={!title.isValid}
             />
-            <Button
-              color="primary"
-              onClick={this.handleCreateClick}
-            >
+            <Button color="primary" onClick={this.handleCreateClick}>
               Create
             </Button>
           </Paper>
