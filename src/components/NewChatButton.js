@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -28,6 +29,12 @@ const styles = theme => ({
 });
 
 class NewChatButton extends React.Component {
+  static propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    onClick: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+  };
+
   state = {
     open: false,
     title: {
@@ -37,7 +44,6 @@ class NewChatButton extends React.Component {
   };
 
   toggleModal = () => {
-    // eslint-disable-next-line
     this.setState({ open: !this.state.open });
   };
 

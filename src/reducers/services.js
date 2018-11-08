@@ -48,7 +48,7 @@ export const isFetching = (state = initialState.isFetching, action) => {
       return { ...state, leaveChat: true };
     case types.DELETE_CHAT_REQUEST:
       return { ...state, deleteChat: true };
-    case types.SOCKETS_СONNECTION_REQUEST:
+    case types.SOCKETS_CONNECTION_REQUEST:
       return { ...state, sockets: true };
     case types.EDIT_USER_REQUEST:
       return { ...state, editUser: true };

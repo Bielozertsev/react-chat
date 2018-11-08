@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -24,6 +25,18 @@ const styles = theme => ({
 });
 
 class UserMenu extends React.Component {
+  static propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    activeUser: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      username: PropTypes.string,
+    }).isRequired,
+    onEditProfileClick: PropTypes.func.isRequired,
+    onLogoutClick: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+  };
+
   state = {
     isModalOpen: false,
     anchorEl: null,
@@ -55,7 +68,6 @@ class UserMenu extends React.Component {
   };
 
   toggleEditProfileModal = () => {
-    // eslint-disable-next-line
     this.setState({ isModalOpen: !this.state.isModalOpen });
     this.handleClose();
   };

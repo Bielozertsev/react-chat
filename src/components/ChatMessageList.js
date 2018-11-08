@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -20,6 +21,31 @@ const styles = theme => ({
 });
 
 class ChatMessageList extends React.Component {
+  static propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      chatId: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      sender: PropTypes.object.isRequired,
+      createdAt: PropTypes.string.isRequired,
+    })),
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired,
+    }).isRequired,
+    activeUser: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      username: PropTypes.string,
+      isMember: PropTypes.bool.isRequired,
+      isCreator: PropTypes.bool.isRequired,
+      isChatMember: PropTypes.bool.isRequired,
+    }).isRequired,
+  };
+
+  static defaultProps = {
+    messages: [],
+  };
+
   componentDidMount() {
     this.scrollDownHistory();
   }
@@ -47,18 +73,10 @@ class ChatMessageList extends React.Component {
             Start messaging…
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Use
-            {' '}
-            <strong>Global</strong>
-            {' '}
-to explore communities around here.
+            Use <strong>Global</strong> to explore communities around here.
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Use
-            {' '}
-            <strong>Recents</strong>
-            {' '}
-to see your recent conversations.
+            Use <strong>Recents</strong> to see your recent conversations.
           </Typography>
         </Paper>
       );

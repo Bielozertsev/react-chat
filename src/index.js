@@ -5,7 +5,7 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
 import './index.css';
-import 'typeface-roboto';
+import 'typeface-roboto'; //eslint-disable-line
 
 const rootEl = document.getElementById('root');
 

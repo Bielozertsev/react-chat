@@ -17,20 +17,22 @@ export function editUser({ username, firstName, lastName }) {
     });
 
     return callApi(
-      'users/me',
+      '/users/me',
       token,
       { method: 'POST' },
       {
         data: { username, firstName, lastName },
       },
     )
-      .then(json => dispatch({
-        type: types.EDIT_USER_SUCCESS,
-        payload: json,
-      }))
-      .catch(reason => dispatch({
-        type: types.EDIT_USER_FAILURE,
-        payload: reason,
-      }));
+      .then(json =>
+        dispatch({
+          type: types.EDIT_USER_SUCCESS,
+          payload: json,
+        }))
+      .catch(reason =>
+        dispatch({
+          type: types.EDIT_USER_FAILURE,
+          payload: reason,
+        }));
   };
 }
