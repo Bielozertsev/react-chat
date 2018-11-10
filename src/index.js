@@ -5,27 +5,27 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
 import './index.css';
-import 'typeface-roboto';
+import 'typeface-roboto'; //eslint-disable-line
 
 const rootEl = document.getElementById('root');
 
 const store = configureStore();
 
 const render = (Component) => {
-  ReactDOM.render( 
+  ReactDOM.render(
     <Provider store={store}>
       <Component />
     </Provider>,
-    rootEl
+    rootEl,
   );
-}
+};
 
 render(App);
-  
-if(module.hot) {
+
+if (module.hot) {
   module.hot.accept('./components/App', () => {
     render(App);
-  })
+  });
 }
 
 registerServiceWorker();

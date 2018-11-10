@@ -1,13 +1,14 @@
+/* eslint no-underscore-dangle: 0 */
 import SocketIOClient from 'socket.io-client';
-import * as types from '../constants';
+import * as types from '../constants/sockets';
 import { redirect } from './services';
-import { ERROR } from 'socket.io-parser';
+import config from '../config';
 
 export function missingSocketConnection() {
   return {
     type: types.SOCKETS_CONNECTION_MISSING,
-    payload: new Error('Missing connection'),
-  }
+    payload: new Error('Missing connection!'),
+  };
 }
 
 let socket = null;
@@ -18,16 +19,16 @@ export function socketsConnect() {
     const { isFetching } = state.services;
     const { token } = state.auth;
 
-    if(isFetching.sockets) {
+    if (isFetching.sockets) {
       return Promise.resolve();
     }
 
     dispatch({
-      type: types.SOCKETS_CONNECTION_MISSING,
+      type: types.SOCKETS_CONNECTION_REQUEST,
     });
 
-    socket = SocketIOClient('ws://localhost:8000/', {
-      query: { token }
+    socket = SocketIOClient(config.SOCKETS_URI, {
+      query: { token },
     });
 
     socket.on('connect', () => {
@@ -35,45 +36,49 @@ export function socketsConnect() {
         type: types.SOCKETS_СONNECTION_SUCCESS,
       });
     });
+
     socket.on('error', (error) => {
       dispatch({
         type: types.SOCKETS_СONNECTION_FAILURE,
         payload: new Error(`Connection: ${error}`),
       });
     });
+
     socket.on('connect_error', () => {
       dispatch({
         type: types.SOCKETS_СONNECTION_FAILURE,
-        payload: new Error('We have lost connection :('),
+        payload: new Error('We have lost a connection :('),
       });
-    }); 
-    
-    socket.on('new-message', (message) =>{
+    });
+
+    socket.on('new-message', (message) => {
       dispatch({
         type: types.RECIEVE_MESSAGE,
         payload: message,
       });
     });
 
-    socket.on('new-chat', ({ chat }) =>{
+    socket.on('new-chat', ({ chat }) => {
       dispatch({
         type: types.RECIEVE_NEW_CHAT,
-        payload: chat,
+        payload: { chat },
       });
     });
 
-    socket.on('deleted-chat', ({ chat }) =>{
+    socket.on('deleted-chat', ({ chat }) => {
       const { activeId } = getState().chats;
 
       dispatch({
-        type: types.RECIVE_DELETED_CHAT,
-        payload: chat,
+        type: types.RECIEVE_DELETED_CHAT,
+        payload: { chat },
       });
 
-      if(activeId === chat._id) {
+      if (activeId === chat._id) {
         dispatch(redirect('/chat'));
       }
     });
+
+    return Promise.resolve();
   };
 }
 
@@ -81,51 +86,54 @@ export function sendMessage(content) {
   return (dispatch, getState) => {
     const { activeId } = getState().chats;
 
-    if(!socket) {
-      dispatch(missingSocketConnection);
+    if (!socket) {
+      dispatch(missingSocketConnection());
     }
 
-    socket.emit('send-message', {
-      chatId: activeId,
-      content,
-    }, () => {
-      dispatch({
-        type: types.SEND_MESSAGE,
-        payload: {
-          chatId: activeId,
-          content,
-        }
-      })
-    })
+    socket.emit(
+      'send-message',
+      {
+        chatId: activeId,
+        content,
+      },
+      () => {
+        dispatch({
+          type: types.SEND_MESSAGE,
+          payload: {
+            chatId: activeId,
+            content,
+          },
+        });
+      },
+    );
   };
 }
 
 export function mountChat(chatId) {
-  return (dispatch, getState) => {
-    if(!socket) {
-      dispatch(missingSocketConnection);
+  return (dispatch) => {
+    if (!socket) {
+      dispatch(missingSocketConnection());
     }
 
     socket.emit('mount-chat', chatId);
 
     dispatch({
       type: types.MOUNT_CHAT,
-      payload: {chatId },
-    })
+      payload: { chatId },
+    });
   };
 }
-
 export function unmountChat(chatId) {
-  return (dispatch, getState) => {
-    if(!socket) {
-      dispatch(missingSocketConnection);
+  return (dispatch) => {
+    if (!socket) {
+      dispatch(missingSocketConnection());
     }
 
-    socket.emit('mount-chat', chatId);
+    socket.emit('unmount-chat', chatId);
 
     dispatch({
       type: types.UNMOUNT_CHAT,
-      payload: { chatId }
-    })
+      payload: { chatId },
+    });
   };
 }
