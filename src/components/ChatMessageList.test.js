@@ -63,7 +63,6 @@ describe('<ChatMessageList />', () => {
           render={props => <ChatMessageList {...mockProps} {...props} />}
         />
       </MemoryRouter>)
-
       .toJSON();
 
     expect(tree).toMatchSnapshot();
